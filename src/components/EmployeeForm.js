@@ -1,4 +1,5 @@
-import "./EmployeeForm.css";import React, { useState } from "react";
+import "./EmployeeForm.css";
+import React, { useState, useEffect } from "react";
 
 function EmployeeForm() {
   const [employee, setEmployee] = useState({
@@ -7,6 +8,15 @@ function EmployeeForm() {
     email: "",
     position: ""
   });
+
+  const [employees, setEmployees] = useState(() => {
+    const savedEmployees = localStorage.getItem("employees");
+    return savedEmployees ? JSON.parse(savedEmployees) : [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem("employees", JSON.stringify(employees));
+  }, [employees]);
 
   const handleChange = (e) => {
     setEmployee({
@@ -17,8 +27,17 @@ function EmployeeForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    setEmployees([...employees, employee]);
+
     alert("Employee Added!");
-    console.log(employee);
+
+    setEmployee({
+      firstName: "",
+      lastName: "",
+      email: "",
+      position: ""
+    });
   };
 
   return (
@@ -60,6 +79,16 @@ function EmployeeForm() {
 
         <button type="submit">Add Employee</button>
       </form>
+
+      <h3>Employees</h3>
+
+      <ul>
+        {employees.map((emp, index) => (
+          <li key={index}>
+            {emp.firstName} {emp.lastName} - {emp.position}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
