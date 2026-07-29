@@ -1,3 +1,4 @@
+import EmployeeList from "./EmployeeList";
 import "./EmployeeForm.css";
 import React, { useState, useEffect } from "react";
 
@@ -80,15 +81,7 @@ function EmployeeForm() {
         <button type="submit">Add Employee</button>
       </form>
 
-      <h3>Employees</h3>
-
-      <ul>
-        {employees.map((emp, index) => (
-          <li key={index}>
-            {emp.firstName} {emp.lastName} - {emp.position}
-          </li>
-        ))}
-      </ul>
+      <EmployeeList employees={employees} />
     </div>
   );
 }
