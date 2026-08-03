@@ -27,19 +27,35 @@ function EmployeeForm() {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    setEmployees([...employees, employee]);
+  setEmployees([...employees, employee]);
 
-    alert("Employee Added!");
+  alert("Employee Added!");
 
-    setEmployee({
-      firstName: "",
-      lastName: "",
-      email: "",
-      position: ""
-    });
-  };
+  setEmployee({
+    firstName: "",
+    lastName: "",
+    email: "",
+    position: ""
+  });
+};
+
+const handleDelete = (indexToDelete) => {
+  const confirmDelete = window.confirm(
+    "Are you sure you want to delete this employee?"
+  );
+
+  if (confirmDelete) {
+    const updatedEmployees = employees.filter(
+      (employee, index) => index !== indexToDelete
+    );
+
+    setEmployees(updatedEmployees);
+  }
+};
+
+    
 
   return (
     <div className="employee-form">
@@ -80,10 +96,13 @@ function EmployeeForm() {
 
         <button type="submit">Add Employee</button>
       </form>
-
-      <EmployeeList employees={employees} />
+<EmployeeList
+  employees={employees}
+  onDelete={handleDelete}
+/>
     </div>
   );
 }
 
 export default EmployeeForm;
+      
